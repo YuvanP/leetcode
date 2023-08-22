@@ -55,7 +55,31 @@
 
 ## Solution
 
-```
+```cpp
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        vector<int> sub;
+        helper(nums, 0, res, sub, target);
+        return res;
+    }
+
+    void helper(vector<int> nums, int i, vector<vector<int>> &res, vector<int> &sub, int tot) {
+        if(tot == 0) {
+            res.push_back(sub);
+            return;
+        }
+        for(int j = i; j < nums.size(); j++) {
+            if(nums[j] > tot) return;
+            if(j != i && nums[j - 1] == nums[j] && j) continue;
+            sub.push_back(nums[j]);
+            helper(nums, j + 1, res, sub, tot - nums[j]);
+            sub.pop_back();
+        }
+    }
+};
 ```
 
 ---
